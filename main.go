@@ -48,7 +48,7 @@ func createTempFile(path string) error {
 			return err
 		}
 	}
-	f, err := os.Create(fPath)
+	f, err := os.OpenFile(fPath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
 		return fmt.Errorf("failed filecreate:" + fPath)
 	}
