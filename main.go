@@ -19,8 +19,10 @@ const (
 	HookFile         = "prepare-commit-msg"
 )
 
+// standard input scanner
 var sc = bufio.NewScanner(os.Stdin)
 
+// main function
 func main() {
 	fmt.Println("create template")
 	createTemplate()
@@ -28,6 +30,7 @@ func main() {
 	createPrepare()
 }
 
+// search git dir
 func findGitdir(path string) (string, error) {
 	searchPath, err := filepath.Abs(path)
 	if err != nil {
@@ -50,6 +53,7 @@ func findGitdir(path string) (string, error) {
 	return findGitdir(filepath.Join(searchPath, "../"))
 }
 
+// make prepare file
 func createPrepare() {
 	path, err := findGitdir("./")
 	if err != nil {
@@ -68,6 +72,7 @@ perl -i.bak -ne "s/{branch}/$branch/g; print" "$1"`
 	}
 }
 
+// create prepare file
 func createHook(fPath string, data string) {
 	file, err := os.Create(fPath)
 	if err != nil {
@@ -81,6 +86,7 @@ func createHook(fPath string, data string) {
 	}
 }
 
+// create home dir
 func createHomedir() string {
 	usr, _ := user.Current()
 	return usr.HomeDir
